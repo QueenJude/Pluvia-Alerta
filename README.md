@@ -39,3 +39,93 @@ A distância detectada é muito pequena, indicando que a água já está próxim
 ### Video Demonstrativo do nosso Projeto:
 
 ----
+### Código Fonte:
+```cpp
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+// Pinos dos LEDs
+int LED_VERDE = 10;
+int LED_AMARELO = 9;
+int LED_VERMELHO = 8;
+
+// Pino do buzzer
+int BUZZER = 6;
+
+// Variáveis para controlar o alarme
+unsigned long previousMillis = 0;
+bool buzzerState = false;
+
+// Função para medir a distância com o sensor ultrassônico
+long readUltrasonicDistance(int triggerPin, int echoPin) {
+  pinMode(triggerPin, OUTPUT);
+  digitalWrite(triggerPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(triggerPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(triggerPin, LOW);
+  pinMode(echoPin, INPUT);
+  return pulseIn(echoPin, HIGH);
+}
+
+void setup() {
+  Serial.begin(9600);
+  lcd.begin(16, 2);
+
+  pinMode(LED_VERDE, OUTPUT);
+  pinMode(LED_AMARELO, OUTPUT);
+  pinMode(LED_VERMELHO, OUTPUT);
+  pinMode(BUZZER, OUTPUT);
+}
+
+void loop() {
+  // Converte tempo do sensor em centímetros
+  int cm = 0.01723 * readUltrasonicDistance(7, 7);
+
+  lcd.clear();
+  lcd.setCursor(0, 1);
+  lcd.print("Nivel: ");
+  lcd.print(cm);
+  lcd.print(" cm");
+
+  if (cm > 100) {
+    // Nível seguro
+    digitalWrite(LED_VERDE, HIGH);
+    digitalWrite(LED_AMARELO, LOW);
+    digitalWrite(LED_VERMELHO, LOW);
+    noTone(BUZZER);
+    lcd.setCursor(0, 0);
+    lcd.print("Nivel seguro   ");
+  } else if (cm <= 100 && cm >= 50) {
+    // Risco de alagamento
+    digitalWrite(LED_VERDE, LOW);
+    digitalWrite(LED_AMARELO, HIGH);
+    digitalWrite(LED_VERMELHO, LOW);
+    noTone(BUZZER);
+    lcd.setCursor(0, 0);
+    lcd.print("RISCO DE AGUA   ");
+  } else {
+    // Alagamento iminente
+    digitalWrite(LED_VERDE, LOW);
+    digitalWrite(LED_AMARELO, LOW);
+    digitalWrite(LED_VERMELHO, HIGH);
+
+    // Alarme sonoro intermitente
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis >= 500) {
+      previousMillis = currentMillis;
+      buzzerState = !buzzerState;
+      if (buzzerState) {
+        tone(BUZZER, 1000); // 1000 Hz
+      } else {
+        noTone(BUZZER);
+      }
+    }
+
+    lcd.setCursor(0, 0);
+    lcd.print("!!! ALAGAMENTO !!!");
+  }
+
+  delay(1000);
+}
