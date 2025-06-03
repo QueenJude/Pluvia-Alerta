@@ -20,8 +20,10 @@ Este projeto apresenta um sistema inteligente de monitoramento de nível de águ
 O sistema utiliza um sensor ultrassônico para medir a distância entre o solo e a superfície da água. Com base nessa medição, ele classifica a situação em três níveis:
 🔹 Nível Seguro (acima de 100 cm):
 A água está em um nível controlado e sem risco iminente. O LED verde acende para indicar normalidade e o buzzer permanece desligado.
+
 🟡 Nível de Alerta (entre 50 cm e 100 cm):
 A água começou a subir e representa um risco potencial de alagamento. O LED amarelo é ativado como sinal de atenção. O buzzer permanece desligado para evitar alarme prematuro.
+
 🔴 Nível Crítico (abaixo de 50 cm):
 A distância detectada é muito pequena, indicando que a água já está próxima do sensor, ou seja, há risco real de alagamento. O LED vermelho acende e o buzzer emite sinais sonoros intermitentes como alerta de emergência.
 ----
