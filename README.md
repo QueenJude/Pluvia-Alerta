@@ -15,6 +15,7 @@ Este projeto apresenta um sistema inteligente de monitoramento de nível de águ
 - Buzzer piezoelétrico
 - Resistores
 - Protoboard e jumpers
+- Potenciômetro
 ----
 ### Como o sistema interpreta os níveis de água:
 O sistema utiliza um sensor ultrassônico para medir a distância entre o solo e a superfície da água. Com base nessa medição, ele classifica a situação em três níveis:
