@@ -35,7 +35,7 @@ A distância detectada é muito pequena, indicando que a água já está próxim
 4. Observe as mudanças nos LEDs, no display LCD e no buzzer.
 ----
 ### Link do Projeto no Tinkcard:
-(https://www.tinkercad.com/things/gc62KntR7AV/editel)
+(https://www.tinkercad.com/things/gc62KntR7AV-sensor-de-nivel)
 ----
 ### Video Demonstrativo do nosso Projeto:
 (https://youtu.be/p6gBkDQX95I)
